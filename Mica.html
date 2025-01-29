@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis 15 Años - Micaela</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #222 20%, #000 80%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .countdown {
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: gold;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle-animation 1.5s infinite;
+        }
+        @keyframes sparkle-animation {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            50% { opacity: 0.5; transform: scale(1.5) translateY(-10px); }
+            100% { opacity: 0; transform: scale(2) translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Mis 15 Años Micaela</div>
+        <div class="countdown" id="countdown"></div>
+    </div>
+    <script>
+        function createSparkle() {
+            const sparkle = document.createElement("div");
+            sparkle.classList.add("sparkle");
+            document.body.appendChild(sparkle);
+            
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            sparkle.style.left = `${x}px`;
+            sparkle.style.top = `${y}px`;
+            sparkle.style.animationDuration = `${1 + Math.random()}s`;
+            
+            setTimeout(() => sparkle.remove(), 1500);
+        }
+        
+        setInterval(createSparkle, 200);
+
+        function updateCountdown() {
+            const eventDate = new Date("June 26, 2025 00:00:00").getTime();
+            const now = new Date().getTime();
+            const timeLeft = eventDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `Faltan ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (timeLeft < 0) {
+                document.getElementById("countdown").innerHTML = "¡Es el gran día!";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
